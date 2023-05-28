@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.teamproj.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +30,8 @@ class MainActivity : AppCompatActivity() {
             override fun onCheckBoxChanged(
                 data: checkData, pos: Int, holder: listAdapter.viewHolder
             ) {
-                data.check = holder.binding.checkimage.isChecked
-                adapter.notifyDataSetChanged()
+                data.check = !data.check
+                adapter.notifyItemChanged(pos)
             }
         }
         binding.recycler.adapter=adapter

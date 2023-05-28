@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.core.os.persistableBundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teamproj.databinding.RowBinding
 
@@ -25,10 +26,10 @@ class listAdapter (val items:MutableList<checkData>)
     inner class viewHolder(val binding: RowBinding)
         : RecyclerView.ViewHolder(binding.root){
             init {
-                binding.checkimage.setOnCheckedChangeListener() {
-                        buttonView, isChecked ->
+                binding.checkimage.setOnClickListener {
                     onCheck?.onCheckBoxChanged(items[adapterPosition],adapterPosition,this)
                 }
+
                 binding.deleteCheck.setOnClickListener {//item삭제
                     removeItem(adapterPosition)
                 }
@@ -59,7 +60,6 @@ class listAdapter (val items:MutableList<checkData>)
 
     override fun onBindViewHolder(holder: listAdapter.viewHolder, position: Int) {
         holder.binding.checktext.text = items[position].text
-
         if (items[position].check){
             holder.binding.checkimage.setBackgroundResource(R.drawable.baseline_check_box_24)
             holder.binding.checktext.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
