@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,false)
         adapter=listAdapter(array)
 
-        adapter.onCheck=object:listAdapter.CheckBoxChangeListener{
+        adapter.onCheck=object:listAdapter.CheckBoxChangeListener{ //체크박스 선택
             override fun onCheckBoxChanged(
                 data: checkData, pos: Int, holder: listAdapter.viewHolder
             ) {
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.recycler.adapter=adapter
 
-        adapter.onChange=object:listAdapter.AdapterListener{
+        adapter.onChange=object:listAdapter.AdapterListener{ //체크리스트 수정하기
             override fun onValueReturned(data: checkData,pos:Int,value: String) {
                 binding.textcheck.setText(value)
                 adapter.removeItem(pos)
@@ -60,9 +60,11 @@ class MainActivity : AppCompatActivity() {
             adapter.deleteItem()
         }
 
-        binding.addlink.setOnClickListener {
-            binding.linktext.setText(binding.link.text.toString())
-            binding.addlink.setText("")
+
+        binding.addlinkbtn.setOnClickListener { //링크 추가하기
+
+            binding.linktext.append("\n"+binding.linkaddtext.text.toString())
+            binding.linkaddtext.setText("")
             val pattern = "^(https?|ftp)://[^\\s/$.?#].[^\\s]*$"
             val linkcheck = binding.linktext.text.toString().matches(pattern.toRegex())
 
@@ -75,7 +77,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "텍스트가 링크로 저장되었습니다.", Toast.LENGTH_SHORT).show()
 
         }
-        binding.linktext.setOnClickListener {
+
+        binding.linktext.setOnClickListener {//링크를 눌렀을때
             val link:String=binding.linktext.getText().toString()
             if (!link.isEmpty()) {
                 try {
@@ -91,6 +94,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.linktextdelete.setOnClickListener {//link 삭제
+            binding.linktext.setText("")
+        }
+        binding.changelinktext.setOnClickListener {//link 수정
+            binding.linkaddtext.setText(binding.linktext.text.toString())
+            binding.linktext.setText("")
+        }
     }
 
 }
